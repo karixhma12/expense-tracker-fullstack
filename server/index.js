@@ -1,6 +1,8 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const dotenv = require("dotenv");
+const signupRouter = require("./auth/signup");
+const loginRouter = require("./auth/login");
 
 dotenv.config();
 const app = express();
@@ -13,6 +15,10 @@ mongoose.connect(process.env.MONGO_URI)
 .catch((err)=>{
     console.log(`Error : ${err}`)
 })
+
+app.use("/api/auth/",signupRouter);
+app.use("/api/auth/",loginRouter);
+
 
 app.listen(process.env.PORT,()=>{
     console.log(`Server is listening on port ${process.env.PORT}`);
