@@ -3,7 +3,7 @@ import {useState,useEffect} from "react";
 import axios from "axios";
 import { useAuth } from "../context/AuthContext";
 import AddTransaction from "../components/AddTransaction";
-
+import Chart from "../components/Chart";
 
 function Dashboard(){
     const [transactions,setTransactions] = useState([]);
@@ -58,7 +58,7 @@ function Dashboard(){
     return(
         <div>
             <Navbar/>
-
+            <Chart totalIncome={income()} totalExpense={expense()}/>
             {/*Summary cards*/}
             <div>
                 <div>Total Income : {income()}</div>
