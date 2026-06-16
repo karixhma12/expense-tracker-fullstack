@@ -2,21 +2,23 @@ import Navbar from "../components/Navbar";
 import {useState,useEffect} from "react";
 import axios from "axios";
 import { useAuth } from "../context/AuthContext";
+import AddTransaction from "../components/AddTransaction";
 
 
 function Dashboard(){
     const [transactions,setTransactions] = useState([]);
     const {token} = useAuth();
 
-    useEffect(()=>{
-        //fetch all transactions here 
+    //fetch all transactions here 
         async function fetchTransactions(){
             const response = await axios.get("http://localhost:3000/api/transactions/transactions" ,{headers:{authorization:token}});
             setTransactions(response.data.transactions);
             console.log(transactions);
         }
+
+    useEffect(()=>{
         fetchTransactions();
-        },[])
+    },[])
 
         function income(){
             const incomeTransactions = transactions.filter((t)=>{
@@ -69,6 +71,11 @@ function Dashboard(){
                         </div>
                     })
                 }
+            </div>
+
+            {/*Add Transaction*/}    
+            <div>
+                <AddTransaction onTransactionAdded={fetchTransactions}/>
             </div>
         </div>
     )
