@@ -11,10 +11,16 @@ function Dashboard(){
 
     //fetch all transactions here 
         async function fetchTransactions(){
-            const response = await axios.get("http://localhost:3000/api/transactions/transactions" ,{headers:{authorization:token}});
+            const response = await axios.get("http://localhost:3000/api/transactions/transactions/",{headers:{authorization:token}});
             setTransactions(response.data.transactions);
             console.log(transactions);
         }
+
+    //delete a transaction
+    async function deleteTransaction(id){
+        await axios.delete(`http://localhost:3000/api/transactions/deletetransaction/${id}`,{headers:{authorization:token}});
+        fetchTransactions();
+    }    
 
     useEffect(()=>{
         fetchTransactions();
@@ -68,6 +74,7 @@ function Dashboard(){
                             <span>{t.description}</span>
                             <span>{t.type}</span>
                             <span>{t.amount}</span>
+                            <button onClick={()=>{deleteTransaction(t._id)}}> Delete </button>
                         </div>
                     })
                 }
